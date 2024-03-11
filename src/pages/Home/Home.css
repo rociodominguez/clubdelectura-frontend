@@ -1,0 +1,21 @@
+.header > a {
+    display: flex;
+    justify-content: end;
+    margin-right: 1.5rem;
+    color: black;
+}
+
+.welcome {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 100%;
+}
+
+.welcome > p {
+    margin: 20px 50px 0px 50px;
+}
