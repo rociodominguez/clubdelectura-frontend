@@ -37,27 +37,40 @@ const renderSurvey = () => {
   mainElement.appendChild(surveyHeader);
   mainElement.appendChild(surveyForm);
 
-  surveyForm.addEventListener('submit', (event) => {
+  surveyForm.addEventListener('submit', async (event) => {
     event.preventDefault();
     const selectedBook = document.getElementById('book-selection').value;
 
-    submitSurvey({ selectedBook });
+    const authToken = localStorage.getItem('authToken');
+
+    if (authToken) {
+      try {
+        const response = await submitSurvey({ selectedBook }, authToken);
+        console.log('Respuesta del servidor:', response);
+      } catch (error) {
+        console.error('Error al enviar resultados:', error);
+      }
+    } else {
+      console.error('No se encontró el token de autenticación');
+    }
   });
 };
 
-const submitSurvey = (surveyData) => {
-  fetch('http://localhost:3000/api/v1/results/survey', {
+const submitSurvey = async (surveyData, authToken) => {
+  const response = await fetch('http://localhost:3000/api/v1/results/survey', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${authToken}`,
     },
     body: JSON.stringify(surveyData),
-  })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Respuesta del servidor:', data);
-    })
-    .catch(error => console.error('Error al enviar resultados:', error));
+  });
+
+  if (!response.ok) {
+    console.error(`Error al enviar resultados: ${response.statusText}`);
+  }
+
+  return response.json();
 };
 
-export { renderSurvey };
+export { renderSurvey, submitSurvey };

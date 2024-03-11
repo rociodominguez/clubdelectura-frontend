@@ -19,18 +19,13 @@ const loginUser = async (username, password) => {
 
       localStorage.setItem('authToken', data.token);
 
-      const expirationDate = new Date();
-      expirationDate.setFullYear(expirationDate.getFullYear() + 1);
-
-      localStorage.setItem('expirationDate', expirationDate.toISOString());
-
       updateHeaderContent();
 
       const booksResponse = await fetch('http://localhost:3000/api/v1/books', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${data.token}`,
+          'Authorization': `Bearer ${data.token}`,
         },
       });
 
@@ -74,4 +69,3 @@ const renderLoginContent = () => {
 };
 
 export { renderLoginContent };
-  
