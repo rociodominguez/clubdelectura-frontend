@@ -20,21 +20,8 @@ const loginUser = async (username, password) => {
       localStorage.setItem('authToken', data.token);
 
       updateHeaderContent();
-
-      const booksResponse = await fetch('http://localhost:3000/api/v1/books', {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${data.token}`,
-        },
-      });
-
-      if (booksResponse.ok) {
-        const booksData = await booksResponse.json();
-        renderBooksContent(booksData);
-      } else {
-        console.error('Error al obtener libros:', booksResponse.statusText);
-      }
+      renderBooksContent(data.booksData); 
+      
     } else {
       console.error('Error en el inicio de sesión:', response.statusText);
     }

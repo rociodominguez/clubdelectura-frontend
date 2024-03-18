@@ -67,7 +67,7 @@ const submitSurvey = async (surveyData, authToken) => {
   });
 
   if (!response.ok) {
-    console.error(`Error al enviar resultados: ${response.statusText}`);
+    console.error("Error al enviar resultados");
   }
 
   return response.json();
