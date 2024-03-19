@@ -1,0 +1,81 @@
+::selection {
+    background-color: #b4b4b4;
+  }
+  
+  .container {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 4rem;
+  }
+  
+  .form {
+    font-family: "Roboto";
+    width: 400px;
+    height: 400px;
+    background-color: rgba(231, 231, 231, 0.389);
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border-radius: 0.5rem;
+  }
+  
+  .title {
+    color: rgb(230, 125, 44);
+    margin: 3rem 0;
+    font-size: 2rem;
+  }
+  
+  .input {
+    margin: 0.5rem 0;
+    padding: 1rem 0.5rem;
+    width: 20rem;
+    background-color: inherit;
+    color: var(--main-color);
+    border: none;
+    outline: none;
+  }
+  
+  .username {
+    border-bottom: 1px solid rgb(230, 125, 44);
+    transition: all 400ms;
+  }
+  
+  .username:hover {
+    background-color: #dedede;
+    border: none;
+    border-radius: 0.5rem;
+  }
+  
+  .password {
+    border-bottom: 1px solid rgb(230, 125, 44);
+    transition: all 400ms;
+  }
+  
+  .password:hover {
+    background-color: #dedede;
+    border: none;
+    border-radius: 0.5rem;
+  }
+  
+  .btn {
+    font-family: "Roboto";
+    height: 3rem;
+    width: 20rem;
+    margin-top: 1rem;
+    background-color: rgb(230, 125, 44);
+    border-radius: 0.5rem;
+    border: none;
+    font-size: 1rem;
+    transition: all 400ms;
+    color: #eaeaea;
+    box-shadow: 0 0 10px  antiquewhite, 0 0 10px antiquewhite;
+  }
+  
+  .btn:hover {
+    background-color: rgb(197, 88, 4);
+    box-shadow: none;
+    color: #eaeaea;
+  }
+  

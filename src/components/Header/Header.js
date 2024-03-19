@@ -1,3 +1,4 @@
+import './Header.css'
 import { renderBooksContent } from "../../pages/Books/Books";
 import {renderSurvey} from "../Survey/Survey"
 
@@ -23,4 +24,9 @@ const updateHeaderContent = () => {
 
 };
 
-export { updateHeaderContent };
+const clearHeaderContent = () => {
+  const headerNav = document.querySelector('nav');
+  headerNav.innerHTML = '';
+};
+
+export { updateHeaderContent, clearHeaderContent };

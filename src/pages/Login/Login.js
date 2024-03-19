@@ -1,4 +1,5 @@
-import { updateHeaderContent } from "../../components/Header/Header";
+import './Login.css'
+import { clearHeaderContent, updateHeaderContent } from "../../components/Header/Header";
 import { renderBooksContent } from "../Books/Books";
 
 const loginUser = async (username, password) => {
@@ -31,18 +32,21 @@ const loginUser = async (username, password) => {
 };
 
 const renderLoginContent = () => {
+
+  clearHeaderContent();
+
   const mainElement = document.querySelector('main');
   mainElement.innerHTML = `
-    <h1>Iniciar Sesión</h1>
-    <form id="login-form">
-      <label for="username">Usuario:</label>
-      <input type="text" id="username" name="username" required>
+  <div class="container">
+    <form class="form" id="login-form">
+    <p class="title">Login</p>
+      <input placeholder="Usuario" class="username input" type="text" id="username" name="username" required>
       <br>
-      <label for="password">Contraseña:</label>
-      <input type="password" id="password" name="password" required>
+      <input placeholder="Contraseña" class="password input" type="password" id="password" name="password" required>
       <br>
-      <button type="submit">Iniciar Sesión</button>
+      <button class="btn" type="submit">Iniciar Sesión</button>
     </form>
+  </div>
   `;
 
   const loginForm = document.getElementById('login-form');

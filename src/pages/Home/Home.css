@@ -1,21 +1,38 @@
-.header > a {
-    display: flex;
-    justify-content: end;
-    margin-right: 1.5rem;
-    color: black;
+#login {
+    font-family: "p";
+    font-size: 17px;
+    color: var(--main-color);
+}
+
+#login:hover {
+    text-decoration: underline;
+    color: var(--main-color);
 }
 
 .welcome {
     display: flex;
     flex-direction: column;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    width: 100%;
+    align-items: center;
+    margin-top: 10rem;
+    gap: 1rem;
+}
+
+.welcome > h1 {
+    font-family: "p";
+    font-size: 50px;
+    color: var(--main-color);
+}
+
+.welcome > h2 {
+    font-family: "h2";
+    font-size: 25px;
+    color: var(--main-color);
 }
 
 .welcome > p {
-    margin: 20px 50px 0px 50px;
+    margin: 0px 80px 0px 80px;
+    text-align: center;
+    font-family: "Roboto";
+    font-size: 20px;
+    color: var(--main-color);
 }

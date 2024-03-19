@@ -1,5 +1,146 @@
-.welcome {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.past-reads-container {
+  margin-top: 2rem;
+}
+
+.current-read, .past-read {
+  font-family: "Roboto";
+  display: flex;
+  justify-content: center;
+}
+
+.current-reads-container,
+.past-reads-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 3rem;
+  font-family: "Roboto";
+  
+}
+
+.current-reads-container > div,
+.past-reads-container > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.current-reads-container > div > img,
+.past-reads-container > div > img {
+  width: 150px;
+  height: 220px;
+}
+
+.current-reads-container .rating,
+.past-reads-container .rating {
+  display: inline-block;
+}
+
+.current-reads-container .rating input,
+.past-reads-container .rating input {
+  display: none;
+}
+
+.current-reads-container .rating label,
+.past-reads-container .rating label {
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.current-reads-container .rating label:before,
+.past-reads-container .rating label:before {
+  content: '\2605';
+  font-size: 30px;
+}
+
+.current-reads-container .rating input:checked ~ label,
+.current-reads-container .rating label:hover,
+.current-reads-container .rating label:hover ~ label,
+.past-reads-container .rating input:checked ~ label,
+.past-reads-container .rating label:hover,
+.past-reads-container .rating label:hover ~ label {
+  color: #FFA723;
+  transition: color 0.3s;
+}
+
+/* ESTILOS DE CARTA */
+
+.book-card {
+  width: 250px;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+}
+
+.book-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.book-card h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+}
+
+.book-card h3 {
+  font-size: 16px;
+  margin-bottom: 5px;
+}
+
+.book-card h4 {
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 10px;
+}
+
+.book-card .rating {
+  margin-bottom: 10px;
+}
+
+.book-card .rating input {
+  display: none;
+}
+
+.book-card .rating label {
+  float: right;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s;
+}
+
+.book-card .rating label:before {
+  content: '\2605';
+  font-size: 20px;
+}
+
+.book-card .rating input:checked ~ label,
+.book-card .rating label:hover,
+.book-card .rating label:hover ~ label {
+  color: #FFA723;
+  transition: color 0.3s;
+}
+
+.book-card .vote-button {
+  background-color: rgb(230, 125, 44);
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.book-card .vote-button:hover {
+  background-color: rgb(197, 88, 4);
 }

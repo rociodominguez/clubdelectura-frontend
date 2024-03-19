@@ -6,6 +6,21 @@
     padding: 0;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+:root {
+    --main-color: #343434;
+}
+
+@font-face {
+    font-family: "h2";
+    src: url(./src/public/assets/fonts/LibreBaskerville-Italic.ttf);
+}
+
+@font-face {
+    font-family: "p";
+    src: url(./src/public/assets/fonts/LibreBaskerville-Regular.ttf);
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url(./src/public/assets/fonts/Roboto-Light.ttf);
 }

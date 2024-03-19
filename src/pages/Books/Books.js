@@ -1,110 +1,87 @@
-import './Books.css';
+import "./Books.css";
 
 const renderBooksContent = async () => {
   try {
-    const fetchBooks = async () => {
-      try {
-        const response = await fetch('http://localhost:3000/api/v1/books', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+    const response = await fetch('http://localhost:3000/api/v1/books', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
 
-        if (response.ok) {
-          const booksData = await response.json();
-          return booksData;
-        } else {
-          console.error('Error al obtener libros:', response.statusText);
-        }
-      } catch (error) {
-        console.error('Error en la aplicación:', error);
-      }
-    };
+    if (!response.ok) {
+      throw new Error('Error al obtener libros:', response.statusText);
+    }
 
-    const handleVoteSubmission = async (event) => {
-      event.preventDefault();
-      
-      const bookSelectElement = document.getElementById("book-select");
-      const bookId = bookSelectElement.value;
-      const rating = document.getElementById("rating").value;
-      const authToken = localStorage.getItem('authToken');
-    
-      console.log("bookId:", bookId);
-      console.log("rating:", rating);
-    
-      try {
-        const response = await fetch(`http://localhost:3000/api/v1/books/${bookId}/vote`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${authToken}`,
-          },
-          body: JSON.stringify({ rating }),
-        });
-    
-        if (response.ok) {
-          alert("¡Voto enviado exitosamente!");
-          renderBooksContent();
-        } else {
-          alert("Error al enviar el voto. Por favor, inténtalo de nuevo.");
-        }
-      } catch (error) {
-        console.error("Error al enviar el voto:", error);
-        alert("Error al enviar el voto. Por favor, inténtalo de nuevo.");
-      }
-    };
-    
-
-    const booksData = await fetchBooks();
+    const booksData = await response.json();
+    const reversedBooksData = booksData.reverse();
 
     const mainElement = document.querySelector('main');
     mainElement.innerHTML = '';
 
-    if (!booksData) {
-      console.error("No se proporcionaron datos de libros");
-      return;
-    }
+    const currentReadsTitleContainer = document.createElement('div');
+    const currentReadsTitle = document.createElement('h3');
+    currentReadsTitle.classList = "current-read"
+    currentReadsTitle.innerHTML = 'Lectura en curso';
+    currentReadsTitleContainer.appendChild(currentReadsTitle);
 
-    const currentReads = booksData.filter(book => book.readingStatus === "actual");
-    const pastReads = booksData.filter(book => book.readingStatus === "acabada");
+    const pastReadsTitleContainer = document.createElement('div');
+    const pastReadsTitle = document.createElement('h3');
+    pastReadsTitleContainer.classList = "past-read"
+    pastReadsTitle.innerHTML = 'Anteriores lecturas';
+    pastReadsTitleContainer.appendChild(pastReadsTitle);
 
-    mainElement.innerHTML = `
-      <h1>Historial</h1>
-      <section>
-        <h2>Lectura Actual</h2>
-        <ul>
-          ${currentReads.map((book) => `<li>${book.title} - ${book.author}</li>`).join('')}
-        </ul>
-      </section>
-      <section>
-        <h2>Lecturas Anteriores</h2>
-        <ul>
-          ${pastReads.map((book) => `<li>${book.title} - ${book.author}</li>`).join('')}
-        </ul>
-      </section>
-      <form id="vote-form">
-        <label for="book-select">Selecciona un libro:</label>
-        <select id="book-select" name="book-select">
-          ${booksData.map((book) => `<option value="${book._id}">${book.title} - ${book.author}</option>`).join('')}
-        </select>
-        <br>
-        <label for="rating">Votar del 1 al 5:</label>
-        <select id="rating" name="rating">
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </select>
-        <button type="submit">Enviar voto</button>
-      </form>
-    `;
+    const currentReadsContainer = document.createElement('div');
+    currentReadsContainer.classList.add('current-reads-container');
+    const pastReadsContainer = document.createElement('div');
+    pastReadsContainer.classList.add('past-reads-container');
 
-    document.getElementById("vote-form").addEventListener("submit", handleVoteSubmission);
+    const currentReads = reversedBooksData.filter(book => book.readingStatus === "actual");
+    const pastReads = reversedBooksData.filter(book => book.readingStatus === "acabada");
+
+    currentReads.forEach(book => {
+      const bookElement = createBookElement(book);
+      currentReadsContainer.appendChild(bookElement);
+    });
+
+    pastReads.forEach(book => {
+      const bookElement = createBookElement(book);
+      pastReadsContainer.appendChild(bookElement);
+    });
+
+    mainElement.appendChild(currentReadsTitleContainer);
+    mainElement.appendChild(currentReadsContainer);
+    mainElement.appendChild(pastReadsTitleContainer);
+    mainElement.appendChild(pastReadsContainer);
+
   } catch (error) {
     console.error('Error en la aplicación:', error);
   }
+};
+
+const createBookElement = (book) => {
+  const bookElement = document.createElement('div');
+  bookElement.classList.add('book-card');
+  bookElement.innerHTML = `
+    <img src="${book.img}" alt="">
+    <h2>${book.title}</h2>
+    <h3>${book.author}</h3>
+    <h4>${book.year}</h4>
+    <div class="rating">
+      <input value="5" name="rating-${book._id}" id="star5-${book._id}" type="radio">
+      <label for="star5-${book._id}"></label>
+      <input value="4" name="rating-${book._id}" id="star4-${book._id}" type="radio">
+      <label for="star4-${book._id}"></label>
+      <input value="3" name="rating-${book._id}" id="star3-${book._id}" type="radio">
+      <label for="star3-${book._id}"></label>
+      <input value="2" name="rating-${book._id}" id="star2-${book._id}" type="radio">
+      <label for="star2-${book._id}"></label>
+      <input value="1" name="rating-${book._id}" id="star1-${book._id}" type="radio">
+      <label for="star1-${book._id}"></label>
+    </div>
+    <button type="button" class="vote-button" data-book-id="${book._id}">Enviar voto</button>
+  `;
+  return bookElement;
 };
 
 export { renderBooksContent };
