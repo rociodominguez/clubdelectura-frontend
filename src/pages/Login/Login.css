@@ -14,7 +14,7 @@
     font-family: "Roboto";
     width: 400px;
     height: 400px;
-    background-color: rgba(231, 231, 231, 0.389);
+    background-color: rgba(209, 211, 209, 0.225);
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -22,7 +22,7 @@
   }
   
   .title {
-    color: rgb(230, 125, 44);
+    color: var(--oliva-color);
     margin: 3rem 0;
     font-size: 2rem;
   }
@@ -38,23 +38,23 @@
   }
   
   .username {
-    border-bottom: 1px solid rgb(230, 125, 44);
+    border-bottom: 1px solid var(--oliva-color);
     transition: all 400ms;
   }
   
   .username:hover {
-    background-color: #dedede;
+    background-color: var(--border);
     border: none;
     border-radius: 0.5rem;
   }
   
   .password {
-    border-bottom: 1px solid rgb(230, 125, 44);
+    border-bottom: 1px solid var(--oliva-color);
     transition: all 400ms;
   }
   
   .password:hover {
-    background-color: #dedede;
+    background-color: var(--border);
     border: none;
     border-radius: 0.5rem;
   }
@@ -64,7 +64,7 @@
     height: 3rem;
     width: 20rem;
     margin-top: 1rem;
-    background-color: rgb(230, 125, 44);
+    background-color: var(--oliva-color);
     border-radius: 0.5rem;
     border: none;
     font-size: 1rem;
@@ -74,8 +74,13 @@
   }
   
   .btn:hover {
-    background-color: rgb(197, 88, 4);
+    background-color: var(--hover);
     box-shadow: none;
     color: #eaeaea;
   }
   
+  @media only screen and (max-width: 600px) {
+    .form {
+      width: 0;
+    }
+  }

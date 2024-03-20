@@ -68,19 +68,28 @@ const createBookElement = (book) => {
     <h3>${book.author}</h3>
     <h4>${book.year}</h4>
     <div class="rating">
-      <input value="5" name="rating-${book._id}" id="star5-${book._id}" type="radio">
+      <input value="5" name="rating-${book._id}" id="star5-${book._id}" type="radio" ${localStorage.getItem(`rating-${book._id}`) === "5" ? 'checked' : ''}>
       <label for="star5-${book._id}"></label>
-      <input value="4" name="rating-${book._id}" id="star4-${book._id}" type="radio">
+      <input value="4" name="rating-${book._id}" id="star4-${book._id}" type="radio" ${localStorage.getItem(`rating-${book._id}`) === "4" ? 'checked' : ''}>
       <label for="star4-${book._id}"></label>
-      <input value="3" name="rating-${book._id}" id="star3-${book._id}" type="radio">
+      <input value="3" name="rating-${book._id}" id="star3-${book._id}" type="radio" ${localStorage.getItem(`rating-${book._id}`) === "3" ? 'checked' : ''}>
       <label for="star3-${book._id}"></label>
-      <input value="2" name="rating-${book._id}" id="star2-${book._id}" type="radio">
+      <input value="2" name="rating-${book._id}" id="star2-${book._id}" type="radio" ${localStorage.getItem(`rating-${book._id}`) === "2" ? 'checked' : ''}>
       <label for="star2-${book._id}"></label>
-      <input value="1" name="rating-${book._id}" id="star1-${book._id}" type="radio">
+      <input value="1" name="rating-${book._id}" id="star1-${book._id}" type="radio" ${localStorage.getItem(`rating-${book._id}`) === "1" ? 'checked' : ''}>
       <label for="star1-${book._id}"></label>
     </div>
     <button type="button" class="vote-button" data-book-id="${book._id}">Enviar voto</button>
   `;
+
+  const ratingInputs = bookElement.querySelectorAll('.rating input[type="radio"]');
+  ratingInputs.forEach(input => {
+    input.addEventListener('change', (event) => {
+      const ratingValue = event.target.value;
+      localStorage.setItem(`rating-${book._id}`, ratingValue);
+    });
+  });
+
   return bookElement;
 };
 

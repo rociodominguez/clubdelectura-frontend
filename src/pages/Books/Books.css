@@ -1,5 +1,5 @@
 .past-reads-container {
-  margin-top: 2rem;
+  margin-top: 1rem;
 }
 
 .current-read, .past-read {
@@ -29,7 +29,7 @@
 .current-reads-container > div > img,
 .past-reads-container > div > img {
   width: 150px;
-  height: 220px;
+  height: 230px;
 }
 
 .current-reads-container .rating,
@@ -46,7 +46,6 @@
 .past-reads-container .rating label {
   float: right;
   cursor: pointer;
-  color: #ccc;
   transition: color 0.3s;
 }
 
@@ -62,7 +61,7 @@
 .past-reads-container .rating input:checked ~ label,
 .past-reads-container .rating label:hover,
 .past-reads-container .rating label:hover ~ label {
-  color: #FFA723;
+  color: var(--stars);
   transition: color 0.3s;
 }
 
@@ -71,7 +70,7 @@
 .book-card {
   width: 250px;
   padding: 20px;
-  border: 1px solid #ddd;
+  border: 1px solid var(--border);
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
@@ -115,7 +114,7 @@
 .book-card .rating label {
   float: right;
   cursor: pointer;
-  color: #ccc;
+  color: var(--border);
   transition: color 0.3s;
 }
 
@@ -127,13 +126,13 @@
 .book-card .rating input:checked ~ label,
 .book-card .rating label:hover,
 .book-card .rating label:hover ~ label {
-  color: #FFA723;
+  color: var(--stars);
   transition: color 0.3s;
 }
 
 .book-card .vote-button {
-  background-color: rgb(230, 125, 44);
-  color: #fff;
+  background-color: var(--oliva-color);
+  color: var(--background-color);
   border: none;
   border-radius: 5px;
   padding: 8px 16px;
@@ -142,5 +141,5 @@
 }
 
 .book-card .vote-button:hover {
-  background-color: rgb(197, 88, 4);
+  background-color: var(--hover);
 }

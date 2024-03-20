@@ -1,14 +1,18 @@
+import "./Survey.css";
+
 const renderSurvey = () => {
   const mainElement = document.querySelector('main');
-
-  const surveyHeader = document.createElement('h1');
-  surveyHeader.textContent = 'Encuesta Mensual';
 
   const surveyForm = document.createElement('form');
   surveyForm.id = 'survey-form';
 
+  const surveyHeader = document.createElement('h1');
+  surveyHeader.textContent = 'Encuesta Mensual';
+  surveyHeader.className = "survey-title";
+  surveyForm.appendChild(surveyHeader);
+
   const labelBook = document.createElement('label');
-  labelBook.textContent = 'Quiero que la próxima lectura sea:';
+  labelBook.textContent = 'Vota por tu libro favorito de este mes';
   labelBook.htmlFor = 'book-selection';
 
   const selectBook = document.createElement('select');
@@ -26,16 +30,26 @@ const renderSurvey = () => {
 
   const submitButton = document.createElement('button');
   submitButton.type = 'submit';
-  submitButton.textContent = 'Enviar Encuesta';
+  submitButton.className = "button";
+  submitButton.textContent = 'Enviar';
 
   surveyForm.appendChild(labelBook);
   surveyForm.appendChild(selectBook);
   surveyForm.appendChild(submitButton);
 
+  const thanksMessage = document.createElement('p');
+  thanksMessage.textContent = '¡Gracias por tu voto!';
+  thanksMessage.className = 'thanks-message';
+  surveyForm.appendChild(thanksMessage);
+
   mainElement.innerHTML = '';
 
-  mainElement.appendChild(surveyHeader);
   mainElement.appendChild(surveyForm);
+
+  const hasVoted = localStorage.getItem('hasVoted');
+  if (hasVoted) {
+    thanksMessage.textContent = 'Ya has votado anteriormente';
+  }
 
   surveyForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -47,6 +61,13 @@ const renderSurvey = () => {
       try {
         const response = await submitSurvey({ selectedBook }, authToken);
         console.log('Respuesta del servidor:', response);
+
+        thanksMessage.style.display = 'block';
+        setTimeout(() => {
+          thanksMessage.style.display = 'none';
+        }, 3000);
+
+        localStorage.setItem('hasVoted', true);
       } catch (error) {
         console.error('Error al enviar resultados:', error);
       }
