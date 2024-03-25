@@ -21,13 +21,13 @@ const renderBooksContent = async () => {
 
     const currentReadsTitleContainer = document.createElement('div');
     const currentReadsTitle = document.createElement('h3');
-    currentReadsTitle.classList = "current-read"
+    currentReadsTitle.classList = "current-read";
     currentReadsTitle.innerHTML = 'Lectura en curso';
     currentReadsTitleContainer.appendChild(currentReadsTitle);
 
     const pastReadsTitleContainer = document.createElement('div');
     const pastReadsTitle = document.createElement('h3');
-    pastReadsTitleContainer.classList = "past-read"
+    pastReadsTitleContainer.classList = "past-read";
     pastReadsTitle.innerHTML = 'Anteriores lecturas';
     pastReadsTitleContainer.appendChild(pastReadsTitle);
 
@@ -39,10 +39,17 @@ const renderBooksContent = async () => {
     const currentReads = reversedBooksData.filter(book => book.readingStatus === "actual");
     const pastReads = reversedBooksData.filter(book => book.readingStatus === "acabada");
 
-    currentReads.forEach(book => {
-      const bookElement = createBookElement(book);
-      currentReadsContainer.appendChild(bookElement);
-    });
+    if (currentReads.length === 0) {
+      const noCurrentReadsParagraph = document.createElement('p');
+      noCurrentReadsParagraph.textContent = 'Aún no hay libro seleccionado';
+      noCurrentReadsParagraph.className = "no-book";;
+      currentReadsContainer.appendChild(noCurrentReadsParagraph);
+    } else {
+      currentReads.forEach(book => {
+        const bookElement = createBookElement(book);
+        currentReadsContainer.appendChild(bookElement);
+      });
+    }
 
     pastReads.forEach(book => {
       const bookElement = createBookElement(book);

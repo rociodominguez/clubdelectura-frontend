@@ -12,7 +12,7 @@ const renderSurvey = () => {
   surveyForm.appendChild(surveyHeader);
 
   const labelBook = document.createElement('label');
-  labelBook.textContent = 'Vota por tu libro favorito de este mes';
+  labelBook.textContent = '¿Qué libro quieres leer este mes?';
   labelBook.htmlFor = 'book-selection';
 
   const selectBook = document.createElement('select');
@@ -37,19 +37,8 @@ const renderSurvey = () => {
   surveyForm.appendChild(selectBook);
   surveyForm.appendChild(submitButton);
 
-  const thanksMessage = document.createElement('p');
-  thanksMessage.textContent = '¡Gracias por tu voto!';
-  thanksMessage.className = 'thanks-message';
-  surveyForm.appendChild(thanksMessage);
-
   mainElement.innerHTML = '';
-
   mainElement.appendChild(surveyForm);
-
-  const hasVoted = localStorage.getItem('hasVoted');
-  if (hasVoted) {
-    thanksMessage.textContent = 'Ya has votado anteriormente';
-  }
 
   surveyForm.addEventListener('submit', async (event) => {
     event.preventDefault();
@@ -62,12 +51,11 @@ const renderSurvey = () => {
         const response = await submitSurvey({ selectedBook }, authToken);
         console.log('Respuesta del servidor:', response);
 
-        thanksMessage.style.display = 'block';
-        setTimeout(() => {
-          thanksMessage.style.display = 'none';
-        }, 3000);
-
-        localStorage.setItem('hasVoted', true);
+        if (response.ok) {
+          fetchSurveyResults();
+        } else {
+          console.error('Error al enviar resultados:', response.statusText);
+        }
       } catch (error) {
         console.error('Error al enviar resultados:', error);
       }
@@ -75,23 +63,64 @@ const renderSurvey = () => {
       console.error('No se encontró el token de autenticación');
     }
   });
+
+  fetchSurveyResults();
 };
 
 const submitSurvey = async (surveyData, authToken) => {
-  const response = await fetch('http://localhost:3000/api/v1/results/survey', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${authToken}`,
-    },
-    body: JSON.stringify(surveyData),
+  try {
+    const response = await fetch('http://localhost:3000/api/v1/results/survey', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${authToken}`,
+      },
+      body: JSON.stringify(surveyData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error al enviar resultados: ${response.statusText}`);
+    }
+
+    return response;
+  } catch (error) {
+    console.error('Error al enviar resultados:', error);
+    throw error;
+  }
+};
+
+const fetchSurveyResults = async () => {
+  try {
+    const authToken = localStorage.getItem('authToken');
+    const response = await fetch('http://localhost:3000/api/v1/results/survey-results', {
+      headers: {
+        'Authorization': `Bearer ${authToken}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error('Error al obtener los resultados de la encuesta');
+    }
+    const data = await response.json();
+    displaySurveyResults(data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const displaySurveyResults = (results) => {
+  const resultsContainer = document.createElement('div');
+  resultsContainer.className = 'survey-results';
+
+  results.forEach(result => {
+    const resultItem = document.createElement('p');
+    resultItem.textContent = `${result.book}: ha recibido ${result.count} votos`;
+    resultItem.className = "votes";
+    resultsContainer.appendChild(resultItem);
   });
 
-  if (!response.ok) {
-    console.error("Error al enviar resultados");
-  }
-
-  return response.json();
+  const mainElement = document.querySelector('main');
+  mainElement.appendChild(resultsContainer);
 };
 
 export { renderSurvey, submitSurvey };
